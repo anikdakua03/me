@@ -1,0 +1,31 @@
+<div id="home">
+  <app-hero></app-hero>
+</div>
+
+<div id="skills">
+  <app-skills></app-skills>
+</div>
+
+<div id="projects">
+  <app-projects></app-projects>
+</div>
+
+<div id="contact">
+  <app-contact></app-contact>
+</div>
+
+@if (showScrollUp()) {
+  <button
+    type="button"
+    id="scroll-up"
+    class="scroll-up cursor-pointer"
+    (click)="scrollToTop()"
+    aria-label="Scroll to top"
+  >
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+}
+
+<footer>
+  <app-footer></app-footer>
+</footer>

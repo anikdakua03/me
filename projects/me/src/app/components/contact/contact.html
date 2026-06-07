@@ -1,0 +1,139 @@
+<section class="contact-shell">
+  <div class="contact-header">
+    <div>
+      <span class="section-badge">Let's connect</span>
+      <!-- <h2>Technical expertise across frontend, backend, and modern tooling.</h2> -->
+      <p class="lead">
+        Whether you have a new project, a challenging problem, or an exciting opportunity, I'd love
+        to hear from you and explore how we can create meaningful solutions.
+      </p>
+    </div>
+  </div>
+
+  <div class="contact-grid">
+    <!-- <span class="section-badge">Let's Connect</span> -->
+    <form class="contact-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <!-- <h3>Let's Connect</h3> -->
+      <!-- <p class="lead">
+        I'm always open to discussing new projects, creative ideas, or opportunities.
+      </p> -->
+
+      <label class="field">
+        <span class="label">Name</span>
+        <input type="text" formControlName="name" placeholder="Your name" />
+        @if (form.get('name')?.touched && form.get('name')?.invalid) {
+          <small class="error">Name is required (min 2 characters).</small>
+        }
+      </label>
+
+      <label class="field">
+        <span class="label">Email</span>
+        <input type="email" formControlName="email" placeholder="your.email@example.com" />
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <small class="error">Provide a valid email address.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span class="label">Message</span>
+        <textarea
+          formControlName="message"
+          rows="6"
+          placeholder="Tell me about your project..."
+        ></textarea>
+        @if (form.get('message')?.touched && form.get('message')?.invalid) {
+          <small class="error">Message must be at least 10 characters.</small>
+        }
+      </label>
+
+      <div class="actions">
+        <button type="submit" class="send" [disabled]="submitting()">
+          @if (!submitting()) {
+            <span> Send Message <fa-icon size="sm" [icon]="icons.Send"></fa-icon> </span>
+          } @else {
+            <span>Sending…</span>
+          }
+        </button>
+      </div>
+    </form>
+
+    @let data = filteredProfile();
+
+    @if (data) {
+      <aside class="contact-info">
+        <h4>Contact Info</h4>
+        @for (item of socialLinks(); track $index) {
+          @switch (item.socialType) {
+            <!-- @case ('Email') {
+              <a
+                [href]="`mailto:${item.link}?subject=Let's connect regarding new opportunities, project ideas, technical discussion`"
+              >
+                <div class="cta-secondary">
+                  <mat-icon>email</mat-icon>
+                </div>
+              </a>
+            } -->
+            @case ('LinkedIn') {
+              <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="card-link">
+                <div class="info-card cursor-pointer">
+                  <fa-icon size="xl" [icon]="icons.LinkedIn"></fa-icon>
+
+                  <div>
+                    <div class="value">{{ item.name }}</div>
+                  </div>
+                </div>
+              </a>
+            }
+            @case ('GitHub') {
+              <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="card-link">
+                <div class="info-card cursor-pointer">
+                  <fa-icon size="xl" [icon]="icons.GitHub"></fa-icon>
+
+                  <div>
+                    <div class="value">{{ item.name }}</div>
+                  </div>
+                </div>
+              </a>
+            }
+          }
+        }
+        <!-- <a
+        href="https://www.linkedin.com/in/anik-dakua"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card-link"
+      >
+        <div class="info-card cursor-pointer">
+          <fa-icon size="xl" [icon]="icons.LinkedIn"></fa-icon>
+
+          <div>
+            <div class="value">LinkedIn</div>
+          </div>
+        </div>
+      </a>
+
+      <a
+        href="https://github.com/anikdakua03"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card-link"
+      >
+        <div class="info-card cursor-pointer">
+          <fa-icon size="xl" [icon]="icons.GitHub"></fa-icon>
+
+          <div>
+            <div class="value">GitHub</div>
+          </div>
+        </div>
+      </a> -->
+
+        <div class="info-card">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <div class="value">{{ data.location }}</div>
+          </div>
+        </div>
+      </aside>
+    }
+  </div>
+</section>

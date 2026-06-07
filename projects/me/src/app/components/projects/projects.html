@@ -1,0 +1,88 @@
+<section class="projects-shell">
+  <div class="projects-header">
+    <div class="header-content">
+      <span class="section-badge">Featured Projects</span>
+      <h2>Showcasing selected work for web, UI, and full-stack products.</h2>
+      <p>
+        A collection of projects that showcase my expertise in full-stack development, modern UI
+        design, and cloud-based solutions. Built with a focus on performance, maintainability, and
+        real-world impact.
+      </p>
+    </div>
+    <div class="project-filters" role="tablist">
+      @for (category of projectCategories; track category) {
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="activeCategory() === category"
+          (click)="selectCategory(category)"
+        >
+          {{ category }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="projects-container">
+    @if (isLoading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading projects...</p>
+      </div>
+    }
+
+    @if (!isLoading() && filteredProjects().length === 0) {
+      <div class="empty-state">
+        <mat-icon>inbox</mat-icon>
+        <h2>No Projects Found</h2>
+        <p>Select a different category to see more work.</p>
+      </div>
+    }
+
+    @if (!isLoading() && filteredProjects().length > 0) {
+      <div class="projects-grid">
+        @for (project of filteredProjects(); track project.id) {
+          <mat-card class="project-card">
+            <div class="card-image-container">
+              <img [src]="project.imageUrl" [alt]="project.title" class="card-image" />
+              <div class="card-overlay">
+                <a
+                  class="card-link"
+                  [href]="project.link"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open project preview"
+                >
+                  <mat-icon>launch</mat-icon>
+                </a>
+                <a
+                  class="card-link"
+                  [href]="project.github"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="View source code"
+                >
+                  <mat-icon>code</mat-icon>
+                </a>
+              </div>
+            </div>
+
+            <mat-card-content class="card-content">
+              <div class="card-meta">{{ project.categories }}</div>
+              <h3 class="card-title">{{ project.title }}</h3>
+              <p class="card-description">{{ project.description | slice: 0 : 110 }}...</p>
+              <div class="card-tags">
+                @for (tag of project.tags | slice: 0 : 3; track tag) {
+                  <mat-chip size="small">{{ tag }}</mat-chip>
+                }
+                @if (project.tags.length > 3) {
+                  <mat-chip size="small" class="more-tag">+{{ project.tags.length - 3 }}</mat-chip>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  </div>
+</section>

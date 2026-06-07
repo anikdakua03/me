@@ -1,1 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: (
+        /* primary: mat.$indigo-palette,
+        primary: mat.$deep-purple-palette,
+        accent: mat.$deep-purple-palette,
+        warn: mat.$red-palette, */
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+/* Snackbar styles */
+/* Material Snackbar custom styles */
+.success-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #2fa835,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+
+}
+.error-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #bf160a,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+  
+}
+.warning-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #afb811,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+}
+
+.info-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #20b6c7,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+}
+
+/* Snackbar styles ends here */

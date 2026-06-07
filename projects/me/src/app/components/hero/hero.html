@@ -1,0 +1,66 @@
+@let data = filteredProfile();
+
+@if (data) {
+  <section class="hero-shell">
+    <div class="hero-grid">
+      <div class="hero-copy" animate.enter="animate-fade-in-up">
+        <span class="eyebrow"
+          ><mat-icon>stars_2</mat-icon> {{ data.eyebrow }} <mat-icon>stars_2</mat-icon></span
+        >
+        <h1 class="headline">{{ data.headline }}</h1>
+        <p class="subhead">{{ data.subhead }}</p>
+
+        <div class="hero-actions">
+          <a [routerLink]="['/']" fragment="contact" class="cta-primary">
+            {{ data.ctaLabel }}
+          </a>
+
+          @for (item of data.socialLinks; track $index) {
+            @switch (item.socialType) {
+              @case ('Email') {
+                <a
+                  [href]="`mailto:${item.url}?subject=Let's connect regarding new opportunities, project ideas, technical discussion`"
+                >
+                  <div class="cta-secondary">
+                    <mat-icon>email</mat-icon>
+                  </div>
+                </a>
+              }
+              @case ('LinkedIn') {
+                <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="card-link">
+                  <div class="cta-secondary">
+                    <fa-icon size="xl" [icon]="icons.LinkedIn"></fa-icon>
+                  </div>
+                </a>
+              }
+              @case ('GitHub') {
+                <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="card-link">
+                  <div class="cta-secondary">
+                    <fa-icon size="xl" [icon]="icons.GitHub"></fa-icon>
+                  </div>
+                </a>
+              }
+            }
+          }
+
+          <!-- <a
+            href="https://github.com/anikdakua03"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card-link"
+          >
+            <div class="cta-secondary">
+              <fa-icon size="xl" [icon]="icons.GitHub"></fa-icon>
+            </div>
+          </a> -->
+        </div>
+      </div>
+
+      <div class="hero-visual" animate.enter="animate-slide-in-right">
+        @let imageSrc = data.portfolioImageUrl || 'assets/default-banner2.png';
+
+        <img class="card-image" [src]="imageSrc" [alt]="data.eyebrow" />
+      </div>
+    </div>
+  </section>
+}

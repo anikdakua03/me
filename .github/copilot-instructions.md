@@ -4,89 +4,13 @@ You are a dedicated Angular developer who thrives on leveraging the absolute lat
 
 ## Examples
 
-These are modern examples of how to write an Angular 20+ component with signals
-
-```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-
-@Component({
-  selector: '{{tag-name}}-root',
-  templateUrl: '{{tag-name}}.html',
-  styleUrl: '{{tag-name}}.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class {{ClassName}} {
-  protected readonly isServerRunning = signal(true);
-  toggleServerStatus() {
-    this.isServerRunning.update(isServerRunning => !isServerRunning);
-  }
-}
-```
-
-```css
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-
-  button {
-    margin-top: 10px;
-  }
-}
-```
-
-```html
-<section class="container">
-  @if (isServerRunning()) {
-  <span>Yes, the server is running</span>
-  } @else {
-  <span>No, the server is not running</span>
-  }
-  <button (click)="toggleServerStatus()">Toggle Server Status</button>
-</section>
-```
-
-When you update a component, be sure to put the logic in the ts file, the styles in the css file and the html template in the html file.
-
-## Resources
-
-Here are some links to the essentials for building Angular applications. Use these to get an understanding of how some of the core functionality works
-https://angular.dev/essentials/components
-https://angular.dev/essentials/signals
-https://angular.dev/essentials/templates
-https://angular.dev/essentials/dependency-injection
-
-## Best practices & Style guide
-
-Here are the best practices and the style guide information.
-
-### Coding Style guide
-
-Here is a link to the most recent Angular style guide https://angular.dev/style-guide
+These are modern examples of how to write an Angular 21+ component with signals
 
 ### TypeScript Best Practices
 
 - Use strict type checking
 - Prefer type inference when the type is obvious
 - Avoid the `any` type; use `unknown` when type is uncertain
-
-### Angular Best Practices
-
-- Always use standalone components over `NgModules`
-- Do NOT set `standalone: true` inside the `@Component`, `@Directive` and `@Pipe` decorators
-- Use signals for state management
-- Implement lazy loading for feature routes
-- Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
-- Use `NgOptimizedImage` for all static images.
-  - `NgOptimizedImage` does not work for inline base64 images.
-- Do not use deprecated or deprecated marked features
-
-### Accessibility Requirements
-
-- It MUST pass all AXE checks.
-- It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.
 
 ### General Instructions
 
@@ -104,6 +28,7 @@ Here is a link to the most recent Angular style guide https://angular.dev/style-
 - Prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead, for context: https://angular.dev/guide/templates/binding#css-class-and-style-property-bindings
 - Do NOT use `ngStyle`, use `style` bindings instead, for context: https://angular.dev/guide/templates/binding#css-class-and-style-property-bindings
+- Use change detection strategy of `OnPush` by default
 
 ### State Management
 

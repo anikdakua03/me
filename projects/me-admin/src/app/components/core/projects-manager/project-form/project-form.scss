@@ -1,0 +1,53 @@
+.dialog-container {
+  min-width: 400px;
+  max-width: 600px;
+  background: white;
+}
+
+:host-context(.dark-mode) .dialog-container {
+  background-color: #1e293b;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+:host-context(.dark-mode) .project-form label {
+  color: #e2e8f0 !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+:host-context(.dark-mode) ::ng-deep .mdc-text-field {
+  background-color: #334155 !important;
+}
+
+:host-context(.dark-mode) ::ng-deep .mdc-floating-label {
+  color: #94a3b8 !important;
+}
+
+:host-context(.dark-mode) ::ng-deep input.mdc-text-field__input,
+:host-context(.dark-mode) ::ng-deep textarea.mdc-text-field__input {
+  color: #f1f5f9 !important;
+}
+
+.dialog-actions {
+  padding: 16px 0;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .dialog-container {
+    min-width: 90vw;
+    max-width: 90vw;
+  }
+}

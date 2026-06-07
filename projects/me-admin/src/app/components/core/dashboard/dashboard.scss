@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+:host-context(.dark-mode) {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+.dashboard-container {
+  padding: 20px;
+}
+
+:host-context(.dark-mode) .dashboard-container {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}

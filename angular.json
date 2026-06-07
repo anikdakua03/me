@@ -24,18 +24,27 @@
             "tsConfig": "projects/me/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "projects/me/src/assets",
               {
                 "glob": "**/*",
-                "input": "projects/me/public"
+                "input": "projects/me/public",
+                "output": "assets"
               }
             ],
             "styles": [
               "projects/me/src/styles.scss",
-              "projects/me/src/tailwind.css"
+              "projects/me/src/tailwind.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/me/src/environments/environment.development.ts",
+                  "with": "projects/me/src/environments/environment.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -52,6 +61,12 @@
             },
             "development": {
               "optimization": false,
+              "fileReplacements": [
+                {
+                  "replace": "projects/me/src/environments/environment.ts",
+                  "with": "projects/me/src/environments/environment.development.ts"
+                }
+              ],
               "extractLicenses": false,
               "sourceMap": true
             }
@@ -100,11 +115,18 @@
             ],
             "styles": [
               "projects/me-admin/src/styles.scss",
-              "projects/me-admin/src/tailwind.css"
+              "projects/me-admin/src/tailwind.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/me-admin/src/environments/environment.development.ts",
+                  "with": "projects/me-admin/src/environments/environment.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -121,6 +143,12 @@
             },
             "development": {
               "optimization": false,
+              "fileReplacements": [
+                {
+                  "replace": "projects/me-admin/src/environments/environment.ts",
+                  "with": "projects/me-admin/src/environments/environment.development.ts"
+                }
+              ],
               "extractLicenses": false,
               "sourceMap": true
             }

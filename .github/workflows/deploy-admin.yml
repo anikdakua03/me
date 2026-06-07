@@ -14,7 +14,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -31,6 +31,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate environment.ts from secret
+        run: |
+          cat > projects/me-admin/src/environments/environment.ts << EOF
+          export const environment = {
+            production: true,
+            firebase: ${{ secrets.ME_ADMIN_FIREBASE_CONFIG }}
+          };
+          EOF
+
       - name: Build shared library
         run: npx ng build shared --configuration production
 
@@ -39,7 +48,7 @@ jobs:
           npx ng build me-admin \
             --configuration production \
             --base-href /
-        # Hash routing handles all routes, base-href is just /
+        # Firebase Hosting serves at root, base-href is /
 
       - name: Create Firebase config from secrets
         run: |
@@ -56,5 +65,3 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
           channelId: live
-        # Deploys to Firebase Hosting production channel
-        # URL will be: https://PROJECT_ID.web.app or custom domain

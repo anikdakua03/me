@@ -1,1 +1,194 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/* Material Theme with Indigo & Deep Purple */
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: (
+        /* primary: mat.$indigo-palette,
+        primary: mat.$deep-purple-palette,
+        accent: mat.$deep-purple-palette,
+        warn: mat.$red-palette, */
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+body.dark-mode {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Material Component Overrides */
+::ng-deep {
+  /* Toolbar */
+  .mat-mdc-toolbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 0 !important;
+
+    .mdc-toolbar__title {
+      margin-left: 0;
+    }
+
+    button mat-icon {
+      color: white;
+    }
+  }
+
+  .dark-mode .mat-mdc-toolbar {
+    background-color: #1e293b !important;
+    background-image: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Cards with smooth transitions */
+  .mat-mdc-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+
+    &:hover {
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15) !important;
+    }
+  }
+
+  /* Dialog */
+  .mat-mdc-dialog-container {
+    border-radius: 8px;
+    box-shadow:
+      0 11px 15px -7px rgba(0, 0, 0, 0.2),
+      0 24px 38px 3px rgba(0, 0, 0, 0.14),
+      0 9px 46px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Buttons */
+  .mat-mdc-raised-button,
+  .mat-mdc-flat-button {
+    &[color='primary'] {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      color: white !important;
+      font-weight: 500;
+
+      &:hover {
+        background: linear-gradient(135deg, #5568d3 0%, #6a3f91 100%) !important;
+      }
+    }
+
+    &[color='accent'] {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+      color: white !important;
+    }
+  }
+
+  /* Chips */
+  .mat-mdc-chip {
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Snackbar */
+  .mat-mdc-snack-bar-container {
+    border-radius: 4px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Sidenav */
+  .mat-drawer {
+    border-radius: 0;
+  }
+
+  /* Form fields */
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
+  /* Spinners */
+  .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: url(#gradient) !important;
+  }
+}
+
+/* Snackbar styles */
+/* Material Snackbar custom styles */
+.success-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #2fa835,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+
+}
+.error-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #bf160a,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+  
+}
+.warning-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #afb811,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+}
+
+.info-snackbar {
+@include mat.snack-bar-overrides((
+    container-color: #20b6c7,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff
+  ));
+}
+
+/* Snackbar styles ends here */
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+
+  &:hover {
+    background: #555;
+  }
+}

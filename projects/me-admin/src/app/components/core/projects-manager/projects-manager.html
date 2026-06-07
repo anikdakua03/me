@@ -1,0 +1,100 @@
+<div class="projects-container">
+  <!-- Header Section -->
+  <div class="projects-header" animate.enter="fade-in">
+    <div class="header-content">
+      <h1>Projects Management</h1>
+      <p>Manage your portfolio projects</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="openAddProjectDialog()" class="add-btn">
+      <mat-icon>add</mat-icon>
+      Add Project
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading projects...</p>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (isLoading() === false && projects().length === 0) {
+    <div class="empty-state">
+      <mat-icon>inbox</mat-icon>
+      <h2>No Projects Yet</h2>
+      <p>Create your first project by clicking the "Add Project" button above</p>
+      <button mat-raised-button color="primary" (click)="openAddProjectDialog()">
+        <mat-icon>add</mat-icon>
+        Create First Project
+      </button>
+    </div>
+  }
+
+  <!-- Projects Grid -->
+  @if (isLoading() === false && projects().length > 0) {
+    <div class="projects-grid">
+      @for (project of projects(); track $index) {
+        <mat-card
+          class="project-card"
+          [style.--card-index]="$index"
+          animate.enter="card-enter"
+          (click)="openProjectDetails(project)"
+        >
+          <!-- Card Image -->
+          <div class="card-image-container">
+            <img [src]="project.imageUrl" [alt]="project.title" class="card-image" />
+            <div class="card-overlay">
+              <button mat-icon-button class="view-btn" title="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <mat-card-content class="card-content">
+            <h3 class="card-title">{{ project.title }}</h3>
+
+            <p class="card-description">{{ project.description | slice: 0 : 100 }}...</p>
+
+            <!-- Tags -->
+            <div class="card-tags">
+              @for (tag of project.tags | slice: 0 : 3; track $index) {
+                <mat-chip size="small">
+                  {{ tag }}
+                </mat-chip>
+              }
+
+              @if (project.tags.length > 3) {
+                <mat-chip size="small" class="more-tag"> +{{ project.tags.length - 3 }} </mat-chip>
+              }
+            </div>
+          </mat-card-content>
+
+          <!-- Card Actions -->
+          <mat-card-actions class="card-actions">
+            <button
+              mat-icon-button
+              (click)="openEditProjectDialog(project); $event.stopPropagation()"
+              title="Edit"
+              class="edit-btn"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              (click)="deleteProject(project); $event.stopPropagation()"
+              title="Delete"
+              class="delete-btn"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <span class="date-badge">{{ project.createdAt | date: 'MMM dd' }}</span>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

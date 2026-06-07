@@ -1,0 +1,66 @@
+@let data = projectData;
+
+@if (data) {
+  <div class="details-container" animate.enter="slide-in">
+    <div class="details-header">
+      <img [src]="data.imageUrl" [alt]="data.title" class="project-image" />
+    </div>
+
+    <mat-dialog-content class="details-content">
+      <h2 class="project-title">{{ data.title }}</h2>
+
+      <p class="project-description">{{ data.description }}</p>
+
+      <div class="tags-section">
+        <mat-chip-set aria-label="Project technologies">
+          @for (tag of data.tags; track $index) {
+            <mat-chip selected>
+              {{ tag }}
+            </mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+
+      <div class="info-section">
+        @if (data.link) {
+          <div class="info-item">
+            <strong>Live Link:</strong>
+            <a [href]="data.link" target="_blank" rel="noopener">
+              {{ data.link }}
+              <mat-icon>open_in_new</mat-icon>
+            </a>
+          </div>
+        }
+        @if (data.github) {
+          <div class="info-item">
+            <strong>GitHub:</strong>
+            <a [href]="data.github" target="_blank" rel="noopener">
+              {{ data.github }}
+              <mat-icon>open_in_new</mat-icon>
+            </a>
+          </div>
+        }
+
+        @if (data.createdAt) {
+          <div class="info-item">
+            <strong>Created:</strong>
+            {{ data.createdAt | date: 'MMM dd, yyyy' }}
+          </div>
+        }
+
+        @if (data.updatedAt) {
+          <div class="info-item">
+            <strong>Updated:</strong>
+            {{ data.updatedAt | date: 'MMM dd, yyyy' }}
+          </div>
+        }
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" class="details-actions">
+      <button mat-button (click)="onClose()">Close</button>
+    </mat-dialog-actions>
+  </div>
+} @else {
+  <p>No data available ..</p>
+}

@@ -1,0 +1,344 @@
+@let isButtonDisabled = data === null || data.isActive;
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="max-h-[80vh] overflow-y-auto p-6">
+  <!-- Header -->
+  <div class="mb-6 flex items-center justify-between">
+    <h2 class="text-2xl font-semibold">
+      {{ isEditMode ? 'Edit Profile' : 'Create Profile' }}
+    </h2>
+
+    <button mat-icon-button type="button" (click)="closeDialog()" [disabled]="isButtonDisabled">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Basic Information -->
+  <section class="mb-8">
+    <h3 class="mb-4 flex items-center gap-2 text-lg font-medium">
+      <mat-icon>person</mat-icon>
+      Basic Information
+    </h3>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Display Name</mat-label>
+        <input matInput formControlName="displayName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-icon matSuffix>mail</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" />
+        <mat-icon matSuffix>location_on</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Portfolio Image Url</mat-label>
+        <input matInput formControlName="portfolioImageUrl" />
+      </mat-form-field>
+    </div>
+
+    <div class="ml-24 bg-green-500 p-10">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Eyebrow</mat-label>
+        <input matInput formControlName="eyebrow" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Headline</mat-label>
+      <textarea matInput rows="2" formControlName="headline"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Subhead</mat-label>
+      <textarea matInput rows="3" formControlName="subhead"></textarea>
+    </mat-form-field>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <mat-form-field appearance="outline">
+        <mat-label>CTA Label</mat-label>
+        <input matInput formControlName="ctaLabel" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>CTA Path</mat-label>
+        <input matInput formControlName="ctaPath" />
+      </mat-form-field>
+    </div>
+  </section>
+
+  <!-- Navigation Links -->
+  <section class="mb-8">
+    <div class="mb-4 flex items-center justify-between">
+      <h3 class="flex items-center gap-2 text-lg font-medium">
+        <mat-icon>menu</mat-icon>
+        Navigation Links
+      </h3>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="addNavLink()"
+        [disabled]="isButtonDisabled"
+      >
+        <mat-icon>add</mat-icon>
+        Add Link
+      </button>
+    </div>
+
+    <div formArrayName="navLinks">
+      @for (link of navLinksFormArray.controls; track $index) {
+        <div [formGroupName]="$index" class="mb-4 grid grid-cols-12 gap-3">
+          <mat-form-field appearance="outline" class="col-span-3">
+            <mat-label>Id</mat-label>
+            <input matInput formControlName="id" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>Label</mat-label>
+            <input matInput formControlName="label" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>Path</mat-label>
+            <input matInput formControlName="path" />
+          </mat-form-field>
+
+          <div class="flex items-center justify-center">
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              (click)="removeNavLink($index)"
+              [disabled]="isButtonDisabled"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Social Links -->
+  <section class="mb-8">
+    <div class="mb-4 flex items-center justify-between">
+      <h3 class="flex items-center gap-2 text-lg font-medium">
+        <mat-icon>menu</mat-icon>
+        Social Links
+      </h3>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="addSocialLink()"
+        [disabled]="isButtonDisabled"
+      >
+        <mat-icon>add</mat-icon>
+        Add Link
+      </button>
+    </div>
+
+    <div formArrayName="socialLinks">
+      @for (link of socialLinksFormArray.controls; track $index) {
+        <div [formGroupName]="$index" class="mb-4 grid grid-cols-12 gap-3">
+          <mat-form-field appearance="outline" class="col-span-3">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>Icon</mat-label>
+            <input matInput formControlName="icon" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>URL</mat-label>
+            <input matInput formControlName="url" />
+          </mat-form-field>
+
+          <!-- Options -->
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>Social Type</mat-label>
+            <mat-select formControlName="socialType" name="socialType">
+              @for (social of socialTypes; track social) {
+                <mat-option [value]="social">{{ social }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <div class="flex items-center justify-center">
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              (click)="removeNavLink($index)"
+              [disabled]="isButtonDisabled"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="mb-8">
+    <div class="mb-4 flex items-center justify-between">
+      <h3 class="flex items-center gap-2 text-lg font-medium">
+        <i class="fa-brands fa-angular text-red-500"></i>
+        Tech Stack
+      </h3>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="addTechStack()"
+        [disabled]="isButtonDisabled"
+      >
+        <mat-icon>add</mat-icon>
+        Add Tech
+      </button>
+    </div>
+
+    <div formArrayName="techStacks">
+      @for (stack of techStacksFormArray.controls; track $index) {
+        <div [formGroupName]="$index" class="mb-4 grid grid-cols-12 gap-3">
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-3">
+            <mat-label>Icon</mat-label>
+            <input matInput formControlName="icon" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" />
+          </mat-form-field>
+
+          <div class="flex items-center justify-center">
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              (click)="removeTechStack($index)"
+              [disabled]="isButtonDisabled"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Skill Categories -->
+  <section>
+    <div class="mb-4 flex items-center justify-between">
+      <h3 class="flex items-center gap-2 text-lg font-medium">
+        <i class="fa-solid fa-layer-group"></i>
+        Skill Categories
+      </h3>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="addSkillCategory()"
+        [disabled]="isButtonDisabled"
+      >
+        <mat-icon>add</mat-icon>
+        Add Category
+      </button>
+    </div>
+
+    <div formArrayName="skillCategories">
+      @for (category of skillCategoriesFormArray.controls; track $index; let catIndex = $index) {
+        <div [formGroupName]="$index" class="mb-6 rounded-xl border p-4">
+          <div class="mb-4 flex items-center justify-between">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Category Title</mat-label>
+              <input matInput formControlName="title" />
+            </mat-form-field>
+
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              (click)="removeSkillCategory($index)"
+              [disabled]="isButtonDisabled"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <div formArrayName="items">
+            @for (skill of getSkillItemsArray($index).controls; track $index) {
+              <div [formGroupName]="$index" class="mb-3 grid grid-cols-12 gap-3">
+                <mat-form-field appearance="outline" class="col-span-4">
+                  <mat-label>Skill</mat-label>
+                  <input matInput formControlName="name" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-span-3">
+                  <mat-label>Icon</mat-label>
+                  <input matInput formControlName="icon" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-span-4">
+                  <mat-label>Category</mat-label>
+                  <input matInput formControlName="category" />
+                </mat-form-field>
+
+                <div class="flex items-center justify-center">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    type="button"
+                    (click)="removeSkillItemFromCategory(catIndex, $index)"
+                    [disabled]="isButtonDisabled"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="addSkillItemToCategory($index)"
+            [disabled]="isButtonDisabled"
+          >
+            <mat-icon>add</mat-icon>
+            Add Skill
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Actions -->
+  <div class="sticky bottom-0 mt-8 flex justify-end gap-3 bg-white py-4">
+    <button mat-stroked-button type="button" (click)="closeDialog()">Cancel</button>
+
+    <button mat-flat-button color="primary" type="submit">
+      <mat-icon>save</mat-icon>
+      {{ isEditMode ? 'Update' : 'Create' }}
+    </button>
+  </div>
+</form>

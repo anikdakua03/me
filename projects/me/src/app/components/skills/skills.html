@@ -1,0 +1,47 @@
+<section class="skills-shell">
+  <div class="skills-header">
+    <div>
+      <span class="section-badge">Skills & Technologies</span>
+      <h2>Technical expertise across frontend, backend, and modern tooling.</h2>
+      <p>
+        Technologies and tools I use to build secure, scalable, and high-performance applications.
+        From frontend development to cloud deployment, each skill contributes to delivering
+        exceptional digital experiences.
+      </p>
+    </div>
+  </div>
+
+  <div class="tech-strip" role="list">
+    @for (item of techStacks(); track item.name) {
+      <div class="tech-card">
+        <div class="tech-icon">{{ item.icon }}</div>
+        <div class="tech-copy">
+          <span class="tech-name">{{ item.name }}</span>
+          <span class="tech-category">{{ item.category }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="skills-grid">
+    @for (category of skillCategories(); track category.title) {
+      <article class="skill-panel">
+        <div class="panel-header">
+          <span class="panel-title">{{ category.title }}</span>
+        </div>
+
+        <div class="skill-list">
+          @for (skill of category.items; track skill.name) {
+            <div class="skill-row">
+              <div class="skill-row-head">
+                <div class="tech-icon">{{ skill.icon }}</div>
+                <span class="skill-name">{{ skill.name }}</span>
+              </div>
+              <!-- <span class="skill-meta">{{ skill.category }}</span> -->
+            </div>
+          }
+        </div>
+      </article>
+    }
+  </div>
+</section>

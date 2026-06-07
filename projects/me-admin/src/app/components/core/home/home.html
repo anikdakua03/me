@@ -1,0 +1,95 @@
+<div [class.dark-mode]="darkMode()" class="flex h-screen flex-col">
+  <mat-toolbar
+    color="primary"
+    class="admin-toolbar sticky top-0 z-50 shadow-md transition-all duration-300"
+  >
+    <button mat-icon-button (click)="toggleSidebar()" class="text-white">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="toolbar-title ml-4 text-xl font-semibold">Portfolio Admin</span>
+    <span class="spacer flex-1"></span>
+    <button
+      mat-icon-button
+      (click)="toggleDarkMode()"
+      [attr.aria-label]="darkMode() ? 'Light mode' : 'Dark mode'"
+      class="hover:bg-opacity-20 text-white transition-colors hover:bg-white"
+    >
+      <mat-icon>{{ darkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container flex-1">
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      [opened]="sidebarOpen()"
+      [class.sidebar-open]="sidebarOpen()"
+      class="sidenav transition-all duration-300"
+    >
+      <mat-toolbar
+        color="accent"
+        class="sidebar-header flex h-16 items-center transition-all duration-300"
+      >
+        <h2 class="m-0 text-xl font-light">Menu</h2>
+      </mat-toolbar>
+
+      <mat-nav-list class="flex-1 p-0">
+        <mat-list-item
+          (click)="navigateTo('dashboard')"
+          class="menu-item h-12 cursor-pointer transition-all duration-200"
+        >
+          <mat-icon matListItemIcon class="text-lg">dashboard</mat-icon>
+          <span matListItemTitle class="ml-2">Dashboard</span>
+        </mat-list-item>
+
+        <mat-list-item
+          (click)="navigateTo('projects')"
+          class="menu-item h-12 cursor-pointer transition-all duration-200"
+        >
+          <mat-icon matListItemIcon class="text-lg">folder</mat-icon>
+          <span matListItemTitle class="ml-2">Projects</span>
+        </mat-list-item>
+
+        <mat-list-item
+          (click)="navigateTo('messages')"
+          class="menu-item h-12 cursor-pointer transition-all duration-200"
+        >
+          <mat-icon matListItemIcon class="text-lg">chat</mat-icon>
+          <span matListItemTitle class="ml-2">Messages</span>
+        </mat-list-item>
+
+        <mat-list-item
+          (click)="navigateTo('profile')"
+          class="menu-item h-12 cursor-pointer transition-all duration-200"
+        >
+          <mat-icon matListItemIcon class="text-lg">person</mat-icon>
+          <span matListItemTitle class="ml-2">Profile</span>
+        </mat-list-item>
+
+        <mat-list-item
+          (click)="navigateTo('settings')"
+          class="menu-item h-12 cursor-pointer transition-all duration-200"
+        >
+          <mat-icon matListItemIcon class="text-lg">settings</mat-icon>
+          <span matListItemTitle class="ml-2">Settings</span>
+        </mat-list-item>
+      </mat-nav-list>
+
+      <div class="sidebar-footer absolute bottom-5 box-border w-full px-4">
+        <button
+          mat-raised-button
+          color="warn"
+          class="logout-btn flex w-full items-center justify-center gap-2 transition-all duration-200"
+          (click)="logout()"
+        >
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="sidenav-content overflow-y-auto p-5 transition-all duration-300">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

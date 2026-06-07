@@ -1,0 +1,158 @@
+.details-container {
+  min-width: 450px;
+  max-width: 600px;
+  background: white;
+}
+
+:host-context(.dark-mode) .details-container {
+  background-color: #1e293b;
+}
+
+.details-header {
+  width: 100%;
+  max-height: 300px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+:host-context(.dark-mode) .details-header {
+  background-color: #334155;
+}
+
+.project-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.details-content {
+  padding: 24px;
+}
+
+.project-title {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: #333;
+}
+
+:host-context(.dark-mode) .project-title {
+  color: #f1f5f9;
+}
+
+.project-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+:host-context(.dark-mode) .project-description {
+  color: #cbd5e1;
+}
+
+.tags-section {
+  margin-bottom: 24px;
+}
+
+::ng-deep .mat-mdc-chip {
+  background-color: #667eea !important;
+  color: white !important;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+:host-context(.dark-mode) .info-item {
+  color: #cbd5e1;
+}
+
+.info-item strong {
+  display: inline-block;
+  min-width: 80px;
+  color: #333;
+  font-weight: 600;
+}
+
+:host-context(.dark-mode) .info-item strong {
+  color: #f1f5f9;
+}
+
+.info-item a {
+  color: #667eea;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  word-break: break-all;
+}
+
+:host-context(.dark-mode) .info-item a {
+  color: #60a5fa;
+}
+
+.info-item a:hover {
+  text-decoration: underline;
+}
+
+.info-item mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.details-actions {
+  padding: 16px 24px;
+  gap: 8px;
+}
+
+/* Animation Classes */
+.details-container {
+  &.slide-in {
+    animation: slide-in 300ms ease-out;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .details-container {
+    min-width: 90vw;
+    max-width: 90vw;
+  }
+
+  .project-image {
+    height: 200px;
+  }
+
+  .details-content {
+    padding: 16px;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+  }
+}

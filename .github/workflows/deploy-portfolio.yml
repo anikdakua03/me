@@ -25,7 +25,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -41,6 +41,15 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Generate environment.ts from secret
+        run: |
+          cat > projects/me/src/environments/environment.ts << EOF
+          export const environment = {
+            production: true,
+            firebase: ${{ secrets.ME_FIREBASE_CONFIG }}
+          };
+          EOF
 
       - name: Build shared library
         run: npx ng build shared --configuration production

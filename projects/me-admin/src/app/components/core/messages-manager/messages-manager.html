@@ -1,0 +1,35 @@
+<div class="h-full">
+  <!-- Messages Grid -->
+  @if (!isLoading() && messages().length > 0) {
+    <div class="projects-grid">
+      @for (message of messages(); track $index; let i = $index) {
+        <mat-card class="project-card" [style.--card-index]="i" animate.enter="card-enter">
+          <!-- Card Content -->
+          <mat-card-content class="card-content">
+            <h3 class="card-title">{{ message.name }}</h3>
+
+            <h3 class="card-title">{{ message.email }}</h3>
+
+            <p class="card-description">{{ message.message | slice: 0 : 100 }}...</p>
+          </mat-card-content>
+
+          <!-- Card Actions -->
+          <mat-card-actions class="card-actions">
+            <button
+              mat-icon-button
+              (click)="deleteMessage(message); $event.stopPropagation()"
+              title="Delete"
+              class="delete-btn"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            @if (message.createdAt) {
+              <span class="date-badge">{{ message.createdAt | date: 'MMM dd' }}</span>
+            }
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

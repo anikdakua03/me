@@ -1,0 +1,86 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit Project' : 'Add New Project' }}</h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="projectForm" class="project-form">
+      <!-- Title -->
+      <mat-form-field class="full-width">
+        <mat-label>Project Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter project title" />
+
+        @if (projectForm.get('title')?.hasError('required')) {
+          <mat-error> Title is required </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Description -->
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Project description"
+          rows="4"
+        ></textarea>
+
+        @if (projectForm.get('description')?.hasError('required')) {
+          <mat-error> Description is required </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Category -->
+
+      <mat-form-field class="full-width">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categories" name="categories" multiple>
+          @for (projectCategory of projectCategories; track projectCategory) {
+            <mat-option [value]="projectCategory">{{ projectCategory }}</mat-option>
+          }
+        </mat-select>
+
+        @if (projectForm.get('category')?.hasError('required')) {
+          <mat-error> Minimum one category is required </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Image URL -->
+      <mat-form-field class="full-width">
+        <mat-label>Image URL</mat-label>
+        <input matInput formControlName="imageUrl" placeholder="https://..." />
+
+        @if (projectForm.get('imageUrl')?.hasError('required')) {
+          <mat-error> Image URL is required </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Tags -->
+      <mat-form-field class="full-width">
+        <mat-label>Tags (comma separated)</mat-label>
+        <input matInput formControlName="tagsInput" placeholder="Angular, Firebase, TypeScript" />
+      </mat-form-field>
+
+      <!-- Project Link -->
+      <mat-form-field class="full-width">
+        <mat-label>Live Link</mat-label>
+        <input matInput formControlName="link" placeholder="https://..." />
+      </mat-form-field>
+
+      <!-- GitHub Link -->
+      <mat-form-field class="full-width">
+        <mat-label>GitHub Link</mat-label>
+        <input matInput formControlName="github" placeholder="https://github.com/..." />
+
+        @if (projectForm.get('github')?.hasError('required')) {
+          <mat-error> GitHub link is required </mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="projectForm.invalid">
+      {{ isEditMode ? 'Update' : 'Add' }} Project
+    </button>
+  </mat-dialog-actions>
+</div>

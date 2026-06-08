@@ -7,6 +7,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { map } from 'rxjs';
 import { LoaderService, MessageDetail, SnackbarService } from 'shared';
 import { MessageManagerService } from '../../../services/message-manager-service';
 
@@ -43,9 +44,21 @@ export class MessagesManager implements OnInit {
   loadMessages(): void {
     this.loaderService.show();
 
-    this.messageManagerService.getAll().subscribe({
+    this.messageManagerService.getAll().pipe(map((data) => {
+      // transform the message data to convert the date to ts date
+      return data.map(msg => {
+        const fireDate = msg.createdAt as any;
+        return {
+          ...msg,
+          // Convert the nested seconds property into a real TS Date
+          createdAt: new Date(fireDate.seconds * 1000)
+        };
+      });
+    })).subscribe({
       next: (messages) => {
         this.messages.set(messages);
+        console.log('messages ', messages);
+
         this.snackBarService.success('message loaded successfully!');
         this.loaderService.hide();
       },

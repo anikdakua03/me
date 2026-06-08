@@ -36,7 +36,7 @@ jobs:
           cat > projects/me-admin/src/environments/environment.ts << EOF
           export const environment = {
             production: true,
-            firebase: ${{ secrets.ME_ADMIN_FIREBASE_CONFIG }}
+            firebaseConfig: ${{ secrets.ME_ADMIN_FIREBASE_CONFIG }}
           };
           EOF
 

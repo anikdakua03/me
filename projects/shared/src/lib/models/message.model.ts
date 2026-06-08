@@ -3,5 +3,5 @@ export interface MessageDetail {
     name: string;
     email: string;
     message: string;
-    createdAt?: Date;
+    createdAt: Date;
 }

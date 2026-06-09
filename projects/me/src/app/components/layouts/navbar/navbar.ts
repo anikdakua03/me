@@ -1,5 +1,17 @@
 import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
-import { Component, computed, effect, ElementRef, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { HeroSection, SnackbarService, TechStackItem } from 'shared';
@@ -7,12 +19,9 @@ import { HeroService } from '../../../services/hero-service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [
-    CommonModule,
-    RouterLink,
-    MatIconModule
-  ],
+  imports: [CommonModule, RouterLink, MatIconModule],
   templateUrl: './navbar.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navbar.scss',
 })
 export class Navbar implements OnInit, OnDestroy {
@@ -90,7 +99,7 @@ export class Navbar implements OnInit, OnDestroy {
       error: (error) => {
         console.error('Error loading profileData:', error);
         this.snackbarService.error('Error loading profileData');
-      }
+      },
     });
   }
 
@@ -112,14 +121,11 @@ export class Navbar implements OnInit, OnDestroy {
     if (element) {
       const navbarHeight = 80;
 
-      const y =
-        element.getBoundingClientRect().top +
-        window.scrollY -
-        navbarHeight;
+      const y = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
 
       window.scrollTo({
         top: y,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
@@ -160,7 +166,7 @@ export class Navbar implements OnInit, OnDestroy {
       currentPath = window.location.pathname.replace('/', '').toLowerCase();
     }
 
-    const matchedLink = this.links().find(link => link.path.toLowerCase() === currentPath);
+    const matchedLink = this.links().find((link) => link.path.toLowerCase() === currentPath);
 
     if (matchedLink) {
       this.activeSection.set(matchedLink.path);
@@ -175,11 +181,11 @@ export class Navbar implements OnInit, OnDestroy {
     const options = {
       root: null,
       rootMargin: '-30% 0px -40% 0px',
-      threshold: 0
+      threshold: 0,
     };
 
     this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.id;
 
@@ -189,7 +195,7 @@ export class Navbar implements OnInit, OnDestroy {
       });
     }, options);
 
-    this.links().forEach(link => {
+    this.links().forEach((link) => {
       const element = document.getElementById(link.path);
       if (element && this.observer) {
         this.observer.observe(element);

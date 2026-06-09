@@ -45,3 +45,7 @@ Thumbs.db
 
 .vscode
 .angular
+
+projects/me-admin/src/environments/environment.ts
+projects/me/src/environments/environment.ts
+refs/*

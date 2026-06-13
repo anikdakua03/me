@@ -1,5 +1,6 @@
 import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   effect,
@@ -10,11 +11,10 @@ import {
   OnInit,
   PLATFORM_ID,
   signal,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { HeroSection, SnackbarService, TechStackItem } from 'shared';
+import { HeroSection, NavLink, SnackbarService, TechStackItem } from 'shared';
 import { HeroService } from '../../../services/hero-service';
 
 @Component({
@@ -43,10 +43,33 @@ export class Navbar implements OnInit, OnDestroy {
     return profileData.length > 0 ? profileData[0] : null;
   });
 
+  readonly defaultLinks: NavLink[] = [
+    {
+      id: 'home',
+      label: 'Home',
+      path: '/home'
+    },
+    {
+      id: 'skills',
+      label: 'Skills',
+      path: '/skills'
+    },
+    {
+      id: 'projects',
+      label: 'Projects',
+      path: '/projects'
+    },
+    {
+      id: 'contact',
+      label: 'Contact',
+      path: '/contact'
+    }
+  ];
+
   readonly links = computed(() => {
     const profileData = this.profiles();
 
-    return profileData.length > 0 ? profileData[0].navLinks : [];
+    return profileData.length > 0 ? profileData[0].navLinks : this.defaultLinks;
   });
 
   readonly activeSection = signal('home');

@@ -44,6 +44,45 @@
 
 .brand-name {
   display: inline-block;
+  position: relative;
+  padding: 12px 24px;
+  border: 1px solid rgba(0, 255, 180, 0.4);
+  border-radius: 999px;
+  background: transparent;
+  color: #00ffb3;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease;
+}
+
+.brand-name::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #00ffb3, #00d9ff);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.brand-name:hover {
+  /* transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 179, 0.25); */
+  transform: scale(1.06) translateY(-2px);
+  box-shadow:
+    0 0 10px rgba(0, 255, 179, 0.3),
+    0 0 20px rgba(0, 255, 179, 0.15);
+}
+
+.brand-name:hover::after {
+  width: 80%;
 }
 
 .mobile-toggle {

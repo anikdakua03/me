@@ -4,4 +4,6 @@ export interface MessageDetail {
     email: string;
     message: string;
     createdAt: Date;
+    isDeleted: boolean;
+    updatedAt: Date;
 }

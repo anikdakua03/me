@@ -28,9 +28,6 @@ export class Skills implements OnInit {
   });
 
   ngOnInit(): void {
-    const f = document.getElementById('skills')?.getBoundingClientRect();
-    console.log('test skill view poert', f);
-
     this.loadProfileData();
   }
 

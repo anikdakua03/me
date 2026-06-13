@@ -22,20 +22,20 @@
       </div>
 
       <div class="info-section">
-        @if (data.link) {
+        @if (data.liveLink) {
           <div class="info-item">
             <strong>Live Link:</strong>
-            <a [href]="data.link" target="_blank" rel="noopener">
-              {{ data.link }}
+            <a [href]="data.liveLink" target="_blank" rel="noopener">
+              {{ data.liveLink }}
               <mat-icon>open_in_new</mat-icon>
             </a>
           </div>
         }
-        @if (data.github) {
+        @if (data.githubLink) {
           <div class="info-item">
             <strong>GitHub:</strong>
-            <a [href]="data.github" target="_blank" rel="noopener">
-              {{ data.github }}
+            <a [href]="data.githubLink" target="_blank" rel="noopener">
+              {{ data.githubLink }}
               <mat-icon>open_in_new</mat-icon>
             </a>
           </div>

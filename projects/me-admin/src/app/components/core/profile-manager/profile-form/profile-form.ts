@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from "@angular/material/icon";
@@ -17,7 +19,9 @@ import { HeroSection, NavLink, SkillCategory, SocialLink, SocialTypes, TechStack
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonToggleModule
   ],
   templateUrl: './profile-form.html',
   styleUrl: './profile-form.scss',
@@ -39,11 +43,12 @@ export class ProfileForm implements OnInit {
 
   ngOnInit(): void {
 
-    const isDisabled = this.data === null || this.data?.isActive;
+    const isDisabled = false; // this.data === null || this.data?.isActive;
 
     this.profileForm = this.fb.group({
       displayName: new FormControl({ value: '', disabled: isDisabled }, Validators.required),
       email: new FormControl({ value: '', disabled: isDisabled }, [Validators.required, Validators.email]),
+      isActive: new FormControl(true),
       eyebrow: new FormControl({ value: '', disabled: isDisabled }, Validators.required),
       headline: new FormControl({ value: '', disabled: isDisabled }, Validators.required),
       subhead: new FormControl({ value: '', disabled: isDisabled }, Validators.required),
@@ -192,6 +197,7 @@ export class ProfileForm implements OnInit {
     this.profileForm.patchValue({
       displayName: profile.displayName,
       email: profile.email,
+      isActive: profile.isActive,
       eyebrow: profile.eyebrow,
       headline: profile.headline,
       subhead: profile.subhead,

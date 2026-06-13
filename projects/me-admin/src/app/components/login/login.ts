@@ -58,7 +58,7 @@ export class Login {
         this.snackbarService.success('Logged in successfully !!');
       },
       error: error => {
-        console.log("Error ..", error);
+        console.error("Error ..", error);
         this.snackbarService.error('Failed to login.');
       }
     });

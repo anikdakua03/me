@@ -1,35 +1,62 @@
 <div class="h-full">
+  <!-- Filters -->
+  <div class="message-filters" role="tablist">
+     @for (category of filters; track category) {
+       <button
+         type="button"
+         class="filter-chip"
+         [class.active]="activeCategory() === category"
+         (click)="selectCategory(category)"
+       >
+         {{ category }}
+       </button>
+     }
+   </div>
+
   <!-- Messages Grid -->
-  @if (!isLoading() && messages().length > 0) {
-    <div class="projects-grid">
-      @for (message of messages(); track $index; let i = $index) {
-        <mat-card class="project-card" [style.--card-index]="i" animate.enter="card-enter">
-          <!-- Card Content -->
-          <mat-card-content class="card-content">
-            <h3 class="card-title">{{ message.name }}</h3>
+  @if (!isLoading() && filteredMessages().length > 0) {
+    @for (message of filteredMessages(); track $index; let i = $index) {
+      <mat-card class="rounded-xl border border-slate-700 bg-slate-800 p-6 text-white shadow-md">
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+          <h2 class="text-lg font-semibold text-white">
+            {{ message.name }}
+          </h2>
 
-            <h3 class="card-title">{{ message.email }}</h3>
+          <span class="text-xl text-slate-300">
+            {{ message.email }}
+          </span>
+        </div>
 
-            <p class="card-description">{{ message.message | slice: 0 : 100 }}...</p>
-          </mat-card-content>
+        <!-- Message Body -->
+        <div class="py-5">
+          <p class="leading-8 text-slate-200">
+            {{message.message}}
+          </p>
+        </div>
 
-          <!-- Card Actions -->
-          <mat-card-actions class="card-actions">
-            <button
-              mat-icon-button
-              (click)="deleteMessage(message); $event.stopPropagation()"
-              title="Delete"
-              class="delete-btn"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            @if (message.createdAt) {
-              <span class="date-badge">{{ message.createdAt.toString() | date: 'medium' }}</span>
-            }
-          </mat-card-actions>
-        </mat-card>
-      }
-    </div>
+        <!-- Footer -->
+        <div class="flex items-center justify-between border-t border-slate-700 pt-4">
+          <button
+            mat-icon-button
+            (click)="deleteMessage(message); $event.stopPropagation()"
+            class="text-red-400 hover:bg-red-500/10"
+            title="Delete"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          @if (message.createdAt) {
+            <span class="flex items-center gap-2 text-sm text-slate-400">
+              <mat-icon class="!text-base">schedule</mat-icon>
+              {{ message.createdAt.toString() | date: 'medium' }}
+            </span>
+          }
+        </div>
+      </mat-card>
+    }
+  }
+  @else {
+    <p class="text-center m-auto text-xl font-bold">No messages arrived yet !!</p>
   }
 </div>

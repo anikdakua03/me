@@ -13,6 +13,11 @@
         }
       </mat-form-field>
 
+      <!-- Active or not -->
+      <div class="checkbox-container full-width">
+        <mat-checkbox formControlName="isActive"> This project will be shown in the portfolio ?</mat-checkbox>
+      </div>
+
       <!-- Description -->
       <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
@@ -29,7 +34,6 @@
       </mat-form-field>
 
       <!-- Category -->
-
       <mat-form-field class="full-width">
         <mat-label>Category</mat-label>
         <mat-select formControlName="categories" name="categories" multiple>
@@ -38,7 +42,7 @@
           }
         </mat-select>
 
-        @if (projectForm.get('category')?.hasError('required')) {
+        @if (projectForm.get('categories')?.hasError('required')) {
           <mat-error> Minimum one category is required </mat-error>
         }
       </mat-form-field>
@@ -56,21 +60,21 @@
       <!-- Tags -->
       <mat-form-field class="full-width">
         <mat-label>Tags (comma separated)</mat-label>
-        <input matInput formControlName="tagsInput" placeholder="Angular, Firebase, TypeScript" />
+        <input matInput formControlName="tags" placeholder="dotnet, angular, sql" />
       </mat-form-field>
 
       <!-- Project Link -->
       <mat-form-field class="full-width">
         <mat-label>Live Link</mat-label>
-        <input matInput formControlName="link" placeholder="https://..." />
+        <input matInput formControlName="liveLink" placeholder="https://..." />
       </mat-form-field>
 
       <!-- GitHub Link -->
       <mat-form-field class="full-width">
         <mat-label>GitHub Link</mat-label>
-        <input matInput formControlName="github" placeholder="https://github.com/..." />
+        <input matInput formControlName="githubLink" placeholder="https://github.com/..." />
 
-        @if (projectForm.get('github')?.hasError('required')) {
+        @if (projectForm.get('githubLink')?.hasError('required')) {
           <mat-error> GitHub link is required </mat-error>
         }
       </mat-form-field>

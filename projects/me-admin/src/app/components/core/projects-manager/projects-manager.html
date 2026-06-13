@@ -11,6 +11,20 @@
     </button>
   </div>
 
+    <!-- Filters -->
+  <div class="project-filters" role="tablist">
+     @for (category of filters; track category) {
+       <button
+         type="button"
+         class="filter-chip"
+         [class.active]="activeCategory() === category"
+         (click)="selectCategory(category)"
+       >
+         {{ category }}
+       </button>
+     }
+   </div>
+
   <!-- Loading State -->
   @if (isLoading()) {
     <div class="loading-container">
@@ -35,7 +49,7 @@
   <!-- Projects Grid -->
   @if (isLoading() === false && projects().length > 0) {
     <div class="projects-grid">
-      @for (project of projects(); track $index) {
+      @for (project of filteredProjects(); track $index) {
         <mat-card
           class="project-card"
           [style.--card-index]="$index"
@@ -91,7 +105,7 @@
               <mat-icon>delete</mat-icon>
             </button>
             <span class="spacer"></span>
-            <span class="date-badge">{{ project.createdAt | date: 'MMM dd' }}</span>
+            <span class="date-badge">{{ project.createdAt | date: 'MMM dd yyyy' }}</span>
           </mat-card-actions>
         </mat-card>
       }

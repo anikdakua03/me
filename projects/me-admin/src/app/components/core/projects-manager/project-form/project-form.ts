@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,7 +23,9 @@ import { Project, ProjectCategories } from 'shared';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonToggleModule
   ],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',
@@ -41,13 +45,14 @@ export class ProjectForm implements OnInit {
     this.isEditMode = !!this.data;
 
     this.projectForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      categories: [[], Validators.required],
-      imageUrl: ['', Validators.required],
-      tagsInput: [''],
-      link: [''],
-      github: ['', Validators.required]
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      isActive: new FormControl(true),
+      imageUrl: new FormControl('', Validators.required),
+      tags: new FormControl('', Validators.required),
+      liveLink: new FormControl(''),
+      githubLink: new FormControl('', Validators.required),
+      categories: new FormControl(['All'], Validators.required),
     });
 
     if (this.isEditMode && this.data) {
@@ -62,11 +67,12 @@ export class ProjectForm implements OnInit {
       const result = {
         title: formValue.title,
         description: formValue.description,
-        category: formValue.category,
+        isActive: formValue.isActive,
+        categories: formValue.categories,
         imageUrl: formValue.imageUrl,
-        tags: formValue.tagsInput.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag),
-        link: formValue.link,
-        github: formValue.github
+        tags: formValue.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag),
+        liveLink: formValue.liveLink,
+        githubLink: formValue.githubLink
       };
 
       this.dialogRef.close(result);
@@ -81,11 +87,12 @@ export class ProjectForm implements OnInit {
     this.projectForm.patchValue({
       title: project.title,
       description: project.description,
-      category: project.categories,
+      isActive: project.isActive,
+      categories: project.categories,
       imageUrl: project.imageUrl,
-      tagsInput: project.tags?.join(', ') || '',
-      link: project.link,
-      github: project.github
+      tags: project.tags?.join(', ') || '',
+      liveLink: project.liveLink,
+      githubLink: project.githubLink
     });
   }
 }

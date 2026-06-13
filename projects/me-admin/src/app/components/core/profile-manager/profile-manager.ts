@@ -7,6 +7,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from "@angular/material/input";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { map } from 'rxjs';
 import { HeroSection, LoaderService, SnackbarService } from 'shared';
 import { AuthService } from '../../../services/auth-service';
 import { ProfileManagerService } from '../../../services/profile-manager-service';
@@ -33,7 +34,7 @@ export class ProfileManager implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly profileManagerService = inject(ProfileManagerService);
   private readonly loaderService = inject(LoaderService);
-  private readonly snackBarService = inject(SnackbarService);
+  private readonly snackbarService = inject(SnackbarService);
   private readonly fb = inject(FormBuilder);
   private readonly dialog = inject(MatDialog);
 
@@ -71,16 +72,28 @@ export class ProfileManager implements OnInit {
   loadProfileData(): void {
     this.loaderService.show();
 
-    this.profileManagerService.getAll().subscribe({
+    this.profileManagerService.getAll().pipe(map((data) => {
+      // transform the message data to convert the date to ts date
+      return data.map(profile => {
+        const fireCreationDate = profile.createdAt as any;
+        const fireUpdatedDate = profile.updatedAt as any;
+        return {
+          ...profile,
+          // Convert the nested seconds property into a real TS Date
+          createdAt: new Date(fireCreationDate.seconds * 1000),
+          updatedAt: new Date(fireUpdatedDate.seconds * 1000)
+        };
+      });
+    })).subscribe({
       next: (profiles) => {
         if (profiles) {
           this.profiles.set(profiles);
-          this.snackBarService.success('Profile/s loaded successfully!');
+          this.snackbarService.success('Profile/s loaded successfully!');
           this.loaderService.hide();
         }
       },
       error: (error) => {
-        this.snackBarService.error('Error loading profileData');
+        this.snackbarService.error('Error loading profileData');
         this.loaderService.hide();
       }
     });
@@ -100,11 +113,11 @@ export class ProfileManager implements OnInit {
         this.profileManagerService.add(result).subscribe({
           next: () => {
             this.loaderService.hide();
-            this.snackBarService.success('Profile added successfully!');
+            this.snackbarService.success('Profile added successfully!');
           },
           error: (error) => {
             this.loaderService.hide();
-            this.snackBarService.error('Error adding profile');
+            this.snackbarService.error('Error adding profile');
           }
         });
       }
@@ -123,13 +136,13 @@ export class ProfileManager implements OnInit {
 
         this.profileManagerService.update(profile.id, result).subscribe({
           next: () => {
-            this.snackBarService.success('Profile updated successfully!');
+            this.snackbarService.success('Profile updated successfully!');
             this.loadProfileData();
             this.loaderService.hide();
           },
           error: (error) => {
             this.loaderService.hide();
-            this.snackBarService.error('Error updating profile');
+            this.snackbarService.error('Error updating profile');
           }
         });
       }
@@ -148,8 +161,13 @@ export class ProfileManager implements OnInit {
   */
   deleteProfile(profile: HeroSection): void {
     if (confirm(`Are you sure you want to delete "${profile.headline}"?`)) {
+      if (profile.isActive) {
+        this.snackbarService.error('Cannot delete an active profile which is currently being shown in the portfolio.');
+        return;
+      }
+
       if (profile.id) {
-        // this.loaderService.show();
+        this.loaderService.show();
 
         // this.profileManagerService.delete(profile.id).subscribe({
         //   next: () => {
@@ -163,6 +181,24 @@ export class ProfileManager implements OnInit {
         //     this.snackBar.open('Error deleting profile', 'Close', { duration: 3000 });
         //   }
         // });
+
+        // update the properties
+        profile.isActive = false;
+        profile.isDeleted = true;
+        profile.updatedAt = new Date();
+
+        this.profileManagerService.update(profile.id, profile).subscribe({
+          next: () => {
+            this.snackbarService.success('Project has been marked as inactive !!');
+            this.loadProfileData();
+            this.loaderService.hide();
+          },
+          error: (error) => {
+            this.loaderService.hide();
+            console.error('Error updating project:', error);
+            this.snackbarService.error('Error updating project');
+          }
+        });
       }
     }
   }

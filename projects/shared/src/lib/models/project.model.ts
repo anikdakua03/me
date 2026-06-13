@@ -1,16 +1,18 @@
 export interface Project {
     id?: string;
+    isActive: boolean;
     title: string;
     description: string;
     imageUrl: string;
     tags: string[];
-    link: string;
-    github: string;
+    liveLink: string;
+    githubLink: string;
     categories: ProjectType[];
-    createdAt?: Date;
-    updatedAt?: Date;
+    isDeleted: boolean; // soft removal
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-export const ProjectCategories = ['All', 'Web Apps', 'UI Components', 'Full Stack', 'Backend POC', 'Others'] as const;
+export const ProjectCategories = ['All', 'Web Apps', 'UI Components', 'Full Stack', 'Backend', 'Others'] as const;
 
 export type ProjectType = typeof ProjectCategories[number];

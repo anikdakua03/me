@@ -7,11 +7,11 @@ import { from, Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private firebaseAuth = inject(Auth);
+  private readonly firebaseAuth = inject(Auth);
 
-  user$ = user(this.firebaseAuth);
+  readonly user$ = user(this.firebaseAuth);
 
-  currentUser = signal<UserInfo | null | undefined>(undefined);
+  readonly currentUser = signal<UserInfo | null | undefined>(undefined);
 
   login(email: string, password: string): Observable<UserCredential> {
     const promise = signInWithEmailAndPassword(this.firebaseAuth, email, password);

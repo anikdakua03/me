@@ -1,18 +1,39 @@
-<div id="home">
-  <app-hero></app-hero>
+<div id="home" class="min-h-screen">
+  <app-hero />
 </div>
 
+<div #skillsTrigger></div>
+
+@defer (on viewport(skillsTrigger)) {
 <div id="skills">
   <app-skills></app-skills>
 </div>
+}
+@placeholder {
+  <app-skeleton/>
+}
 
+<div #projectsTrigger></div>
+
+@defer (on viewport(projectsTrigger)) {
 <div id="projects">
   <app-projects></app-projects>
 </div>
+}
+@placeholder {
+  <app-skeleton/>
+}
 
+<div #contactTrigger></div>
+
+@defer (on viewport(contactTrigger)) {
 <div id="contact">
   <app-contact></app-contact>
 </div>
+}
+@placeholder {
+    <app-skeleton/>
+}
 
 @if (showScrollUp()) {
   <button

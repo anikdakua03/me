@@ -338,3 +338,30 @@
     width: 100%;
   }
 }
+
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.filter-chip {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #d9e2f5;
+  padding: 0.85rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.filter-chip:hover,.filter-chip.active {
+  background: rgba(170, 247, 234, 0.18);
+  color: #7bf2a8;
+  transform: translateY(-1px);
+}

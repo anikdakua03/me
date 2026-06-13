@@ -5,5 +5,5 @@ import { FirestoreService, Project, TABLES } from 'shared';
   providedIn: 'root',
 })
 export class ProjectManagerService extends FirestoreService<Project> {
-  protected override collectionPath: string = TABLES.Projects;
+  protected collectionPath: string = TABLES.Projects;
 }

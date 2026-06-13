@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Loader } from './components/loader/loader';
 import { AuthService } from './services/auth-service';
@@ -11,7 +11,7 @@ import { AuthService } from './services/auth-service';
   styleUrl: './app.scss',
 })
 export class App implements OnInit {
-  authService = inject(AuthService);
+  protected readonly authService = inject(AuthService);
 
   protected readonly title = signal('me-admin');
 

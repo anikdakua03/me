@@ -88,7 +88,9 @@ export class Contact implements OnInit {
       name: name || '',
       email: email || '',
       message: message || '',
-      createdAt: new Date()
+      createdAt: new Date(),
+      isDeleted: false,
+      updatedAt: new Date()
     };
 
     this.messageService.add(msg).subscribe({

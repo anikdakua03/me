@@ -6,6 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { map } from 'rxjs';
 import { Project, ProjectCategories, ProjectType, SnackbarService } from 'shared';
 import { ProjectService } from '../../services/project-service';
 
@@ -53,7 +54,10 @@ export class Projects {
 
   loadProjects(): void {
     this.isLoading.set(true);
-    this.projectService.getAll().subscribe({
+    this.projectService.getAll().pipe(map((data) => {
+      // filter out active projects only
+      return data.filter(project => project.isActive && project.isDeleted === false);
+    })).subscribe({
       next: (projects) => {
         this.projects.set(projects);
         this.isLoading.set(false);
